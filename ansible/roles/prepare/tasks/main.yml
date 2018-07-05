@@ -1,0 +1,24 @@
+
+- name: workaround for getting home folder
+  shell: "grep {{ ansible_user }} /etc/passwd | awk -F: '{print $6}'"
+  register: user_home_folder
+
+- debug:
+    var: user_home_folder.stdout
+
+- name: Create a data folder for all containers
+  file:
+    path: "{{ ansible_env.HOME }}/data/{{ item }}"
+    state: directory
+    recurse: yes
+  with_items:
+    - filebeat
+    - logstash
+    - elasticsearch
+    - kibana
+    - "nginx/conf.d/"
+    - "nginx/ssl/"
+
+- name: Create Docker Network
+  docker_network:
+    name: "{{ docker_network }}"

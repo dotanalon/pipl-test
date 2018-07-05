@@ -1,0 +1,15 @@
+- name: Create config file for logstash
+  template:
+    src: logstash.yml.j2
+    owner: 1000
+    dest: "{{ user_home_folder.stdout }}/data/logstash/logstash.yml"
+
+- name: Create a logstash container
+  docker_container:
+    name: "{{ logstash_container_name }}"
+    image: docker.elastic.co/logstash/logstash-oss:6.3.0
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ user_home_folder.stdout }}/data/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro"
+

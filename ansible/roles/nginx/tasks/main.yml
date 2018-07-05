@@ -1,0 +1,26 @@
+- name: ssl certificates
+  copy: 
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/data/nginx/ssl/{{ item }}"
+  with_items:
+   - dhparam.pem
+   - nginx-selfsigned.crt
+   - nginx-selfsigned.key
+
+- name: nginx ssl conf file
+  template:
+    src: ssl.conf.j2
+    dest:  "{{ user_home_folder.stdout }}/data/nginx/conf.d/ssl.conf"
+
+- name: Create a nginx container
+  docker_container:
+    name: "{{ nginx_container_name }}"
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ ansible_env.HOME }}/data/nginx/conf.d/:/etc/nginx/conf.d/:ro"
+      - "{{ ansible_env.HOME }}/data/nginx/ssl/:/etc/ssl/nginx/:ro"

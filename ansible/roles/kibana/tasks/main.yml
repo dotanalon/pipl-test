@@ -1,0 +1,6 @@
+- name: Create a kibana container
+  docker_container:
+    name: "{{ kibana_container_name }}"
+    image: docker.elastic.co/kibana/kibana-oss:6.3.0
+    state: started
+    restart_policy: always

@@ -1,0 +1,16 @@
+
+- name: Create config file for filebeat
+  template:
+    src: filebeat.yml.j2
+    owner: 1000
+    mode: "0644"
+    dest: "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml"
+
+- name: Create a filebeat container
+  docker_container:
+    name: "{{ filebeat_container_name }}"
+    image: docker.elastic.co/beats/filebeat:6.3.0
+    state: started
+    restart_policy: always
+    volumes:
+      - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
