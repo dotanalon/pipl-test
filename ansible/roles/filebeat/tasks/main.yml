@@ -12,6 +12,12 @@
     image: docker.elastic.co/beats/filebeat:6.3.0
     state: started
     restart_policy: always
+    networks:
+      - name: "{{ docker_network.Name }}"
     volumes:
       - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
-    dns_servers: 127.0.0.1
+
+- debug:
+   var: docker_network.Name
+#- name: workaroud to ansible bugs with docker_networks
+#  shell: "docker network connect {{ docker_network }} {{ filebeat_container_name }}"

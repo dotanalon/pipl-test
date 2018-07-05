@@ -21,6 +21,8 @@
       - "443:443"
     state: started
     restart_policy: always
+    networks:
+      - name: "{{ docker_network.Name }}"
     volumes:
       - "{{ ansible_env.HOME }}/data/nginx/conf.d/:/etc/nginx/conf.d/:ro"
       - "{{ ansible_env.HOME }}/data/nginx/ssl/:/etc/ssl/nginx/:ro"

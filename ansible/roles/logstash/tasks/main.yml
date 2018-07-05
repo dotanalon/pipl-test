@@ -10,6 +10,8 @@
     image: docker.elastic.co/logstash/logstash-oss:6.3.0
     state: started
     restart_policy: always
+    networks:
+      - name: "{{ docker_network.Name }}"
     volumes:
       - "{{ user_home_folder.stdout }}/data/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro"
 

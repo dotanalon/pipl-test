@@ -4,18 +4,7 @@
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.0
     state: started
     restart_policy: always
+    networks:
+      - name: "{{ docker_network.Name }}"
     volumes:
       - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
-    dns_servers: 127.0.0.1
-  register: my_var
-
-- name: Add a container to a network, leaving existing containers connected
-  docker_network:
-    name: "{{ docker_network }}"
-    connected:
-      - "{{ elasticsearch_container_name }}"
-    appends: yes
-
-
-- debug:
-    var: my_var.ansible_facts.docker_container.NetworkSettings.Networks.bridge.IPAddress

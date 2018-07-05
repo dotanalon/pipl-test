@@ -4,3 +4,6 @@
     image: docker.elastic.co/kibana/kibana-oss:6.3.0
     state: started
     restart_policy: always
+    networks:
+      - name: "{{ docker_network.Name }}"
+
