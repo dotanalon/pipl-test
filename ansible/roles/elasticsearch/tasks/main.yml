@@ -6,5 +6,8 @@
     restart_policy: always
     networks:
       - name: "{{ docker_network }}"
+        ipv4_address: "172.1.1.100"
+        aliases:
+          - "{{ elasticsearch_container_name }}"
     volumes:
       - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
