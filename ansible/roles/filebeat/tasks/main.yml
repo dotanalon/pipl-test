@@ -14,3 +14,4 @@
     restart_policy: always
     volumes:
       - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+    dns_servers: 127.0.0.1
