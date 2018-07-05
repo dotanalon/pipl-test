@@ -1,8 +1,8 @@
-filebeat.inputs:
-- type: log
-  enabled: true
+filebeat.prospectors:
+- input_type: log
   paths:
-    - /var/log/pipl/*.log
-
+    - /var/shared-logs/nginx/access.log*
+    - /var/shared-logs/nginx/error.log*
+  exclude_files: [".gz$"]
 output.logstash:
-  hosts: ["127.0.0.1:5044"]
+  hosts: ["{{ logstash_container_name }}:5044"]

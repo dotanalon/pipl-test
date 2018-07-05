@@ -29,3 +29,4 @@
       - "{{ user_home_folder.stdout }}/data/nginx/conf.d/:/etc/nginx/conf.d/:ro"
       - "{{ user_home_folder.stdout }}/data/nginx/htpasswd:/etc/nginx/htpasswd:ro"
       - "{{ user_home_folder.stdout }}/data/nginx/ssl/:/etc/ssl/nginx/:ro"
+      - "{{ user_home_folder.stdout }}/data/nginx/log/:/var/log/"
