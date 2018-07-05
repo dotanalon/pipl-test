@@ -29,7 +29,9 @@ function install_docker()
 
 function install_ansible()
 {
-	yum -y install ansible python-docker-py.noarch
+	yum -y install ansible \
+		python-docker-py.noarch \
+		pyOpenSSL.x86_64
 }
 
 function _create_ssh_folder ()

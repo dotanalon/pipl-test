@@ -1,16 +1,18 @@
 - name: ssl certificates
-  copy: 
-    src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/data/nginx/ssl/{{ item }}"
-  with_items:
-   - dhparam.pem
-   - nginx-selfsigned.crt
-   - nginx-selfsigned.key
+  shell: "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt -subj /C=IL/ST=IL/L=IL/O=Demo/OU=DevOps/CN=Demo/emailAddress=d.m@g.com"
+  args:
+    chdir: "{{ user_home_folder.stdout }}/data/nginx/ssl/"
 
-- name: nginx ssl conf file
+- name: nginx kibana conf
   template:
-    src: ssl.conf.j2
-    dest:  "{{ user_home_folder.stdout }}/data/nginx/conf.d/ssl.conf"
+    src: kibana.conf.j2
+    dest:  "{{ user_home_folder.stdout }}/data/nginx/conf.d/kibana.conf"
+
+- htpasswd:
+    path: "{{ user_home_folder.stdout }}/data/nginx/htpasswd"
+    name: pipl
+    password: 'pipl'
+    mode: 0644
 
 - name: Create a nginx container
   docker_container:
@@ -24,5 +26,6 @@
     networks:
       - name: "{{ docker_network.Name }}"
     volumes:
-      - "{{ ansible_env.HOME }}/data/nginx/conf.d/:/etc/nginx/conf.d/:ro"
-      - "{{ ansible_env.HOME }}/data/nginx/ssl/:/etc/ssl/nginx/:ro"
+      - "{{ user_home_folder.stdout }}/data/nginx/conf.d/:/etc/nginx/conf.d/:ro"
+      - "{{ user_home_folder.stdout }}/data/nginx/htpasswd:/etc/nginx/htpasswd:ro"
+      - "{{ user_home_folder.stdout }}/data/nginx/ssl/:/etc/ssl/nginx/:ro"
