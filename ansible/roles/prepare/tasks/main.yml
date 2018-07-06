@@ -13,7 +13,7 @@
     recurse: yes
   with_items:
     - "{{ filebeat_container_name }}"
-    - "{{ logstash_container_name }}"
+    - "{{ logstash_container_name }}/pipelines"
     - "{{ elasticsearch_container_name }}"
     - "{{ kibana_container_name }}"
     - "{{ nginx_container_name }}/conf.d/"
