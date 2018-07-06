@@ -11,11 +11,14 @@
     name: "{{ filebeat_container_name }}"
     image: docker.elastic.co/beats/filebeat:6.3.0
     state: started
+    user: root
     restart_policy: always
     networks:
       - name: "{{ docker_network.Name }}"
     volumes:
       - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "{{ user_home_folder.stdout }}/data/nginx/logs/:/var/log/nginx/logs/:ro"
+#      - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
 
 - debug:
    var: docker_network.Name

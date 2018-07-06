@@ -3,10 +3,10 @@
     src: pipeline.yml.j2
     dest: "{{ user_home_folder.stdout }}/data/logstash/pipeline.yml"
 
-- name: copy pipelines
-  copy:
-    src: pipelines
-    dest: "{{ user_home_folder.stdout }}/data/logstash/"
+- name: simple pipelines
+  template:
+    src: simple.j2
+    dest: "{{ user_home_folder.stdout }}/data/logstash/pipelines/nginx"
 
 - name: Create a logstash container
   docker_container:
@@ -17,6 +17,5 @@
     networks:
       - name: "{{ docker_network.Name }}"
     volumes:
-      - "{{ user_home_folder.stdout }}/data/logstash/pipeline.yml:/etc/logstash/conf.d/pipeline.yml:ro"
-      - "{{ user_home_folder.stdout }}/data/logstash/pipelines/:/etc/logstash/pipelines/:ro"
+      - "{{ user_home_folder.stdout }}/data/logstash/pipelines/:/usr/share/logstash/pipeline/:ro"
 

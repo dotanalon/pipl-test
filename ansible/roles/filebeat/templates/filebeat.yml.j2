@@ -1,8 +1,9 @@
 filebeat.prospectors:
 - input_type: log
   paths:
-    - /var/shared-logs/nginx/access.log*
-    - /var/shared-logs/nginx/error.log*
+    - /var/log/nginx/logs/*access.log*
+    - /var/log/nginx/logs/*error.log*
   exclude_files: [".gz$"]
+
 output.logstash:
   hosts: ["{{ logstash_container_name }}:5044"]
