@@ -1,0 +1,8 @@
+- name: Create a cerebro container
+  docker_container:
+    name: "{{ cerebro_container_name }}"
+    image: yannart/cerebro:latest
+    state: started
+    restart_policy: always
+    networks:
+      - name: "{{ docker_network.Name }}"

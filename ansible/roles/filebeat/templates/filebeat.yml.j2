@@ -3,11 +3,8 @@ filebeat.prospectors:
   paths:
     - /var/log/nginx/logs/*access.log*
     - /var/log/nginx/logs/*error.log*
+    - /var/lib/docker/containers/*/*.log
   exclude_files: [".gz$"]
-
-- type: log
-  paths:
-   - '/var/lib/docker/containers/*/*.log'
   json.message_key: log
   json.keys_under_root: true
   processors:

@@ -1,0 +1,16 @@
+server {
+    listen 9000 default_server ssl;
+    listen            [::]:9000 ssl;
+
+    ssl_certificate /etc/ssl/nginx/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/nginx/nginx-selfsigned.key;
+
+#    access_log            /var/log/nginx/cerebro-access.log;
+#    error_log            /var/log/nginx/cerebro-error.log;
+
+    location / {
+        auth_basic "Restricted";
+        auth_basic_user_file /etc/nginx/htpasswd;
+        proxy_pass http://{{ cerebro_container_name }}:9000/;
+    }
+}

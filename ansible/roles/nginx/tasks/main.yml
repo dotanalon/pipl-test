@@ -8,6 +8,11 @@
     src: kibana.conf.j2
     dest:  "{{ user_home_folder.stdout }}/data/nginx/conf.d/kibana.conf"
 
+- name: cerebro kibana conf
+  template:
+    src: cerebro.conf.j2
+    dest:  "{{ user_home_folder.stdout }}/data/nginx/conf.d/cerebro.conf"
+
 - htpasswd:
     path: "{{ user_home_folder.stdout }}/data/nginx/htpasswd"
     name: pipl
@@ -21,6 +26,7 @@
     ports:
       - "80:80"
       - "443:443"
+      - "9000:9000"
     state: started
     restart_policy: always
     networks:
