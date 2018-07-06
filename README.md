@@ -5,3 +5,4 @@ clean instance preperation:
 spawn new environment:
 ansible-playbook -i inventory main.yml
 
+Curator conf in under conf/curator/
