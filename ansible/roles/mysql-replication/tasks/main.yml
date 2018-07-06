@@ -1,0 +1,31 @@
+- name: Create a master mysql node
+  docker_container:
+    name: "{{ mysql_master_container_name }}"
+    image:  actency/docker-mysql-replication:5.7
+    state: started
+    restart_policy: always
+    env:
+      { "MYSQL_ROOT_PASSWORD": "rootpwd", "MYSQL_USER": "pipl", "MYSQL_PASSWORD": "pipl", "MYSQL_DATABASE": "pipl", "REPLICATION_USER": "replication_user", "REPLICATION_PASSWORD": "myreplpassword" }
+    networks:
+      - name: "{{ docker_network.Name }}"
+
+
+- name: Create a slave mysql node
+  docker_container:
+    name: "{{ mysql_slave_container_name }}"
+    image:  actency/docker-mysql-replication:5.7
+    state: started
+    restart_policy: always
+    links:
+      - "{{ mysql_master_container_name }}:master"
+    env:
+      { "MYSQL_ROOT_PASSWORD": "rootpwd", "MYSQL_USER": "pipl", "MYSQL_PASSWORD": "pipl", "MYSQL_DATABASE": "pipl", "REPLICATION_USER": "replication_user", "REPLICATION_PASSWORD": "myreplpassword" }
+#    env:
+#      - MYSQL_ROOT_PASSWORD=rootpwd
+#      - MYSQL_USER=pipl
+#      - MYSQL_PASSWORD=pipl
+#      - MYSQL_DATABASE=pipl
+#      - REPLICATION_USER=replication_user
+#      - REPLICATION_PASSWORD=myreplpassword
+    networks:
+      - name: "{{ docker_network.Name }}"

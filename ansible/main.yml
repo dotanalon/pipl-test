@@ -3,6 +3,7 @@
 
   roles:
    - prepare
+   - journalbeat
    - filebeat
    - logstash
    - elasticsearch

@@ -1,0 +1,13 @@
+- name: Create a journalbeat container
+  docker_container:
+    name: "{{ journalbeat_container_name }}"
+    image: mcasimir/journalbeat
+    state: started
+    restart_policy: always
+    env:
+      {"LOGSTASH_HOST": "{{ logstash_container_name}}:5044", "LOG_LEVEL": "warning"}
+    networks:
+      - name: "{{ docker_network.Name }}"
+    volumes:
+      - "/run/log/journal:/var/log/journal"
+      - "/etc/machine-id:/etc/machine-id"

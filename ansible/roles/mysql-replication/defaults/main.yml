@@ -1,0 +1,2 @@
+mysql_master_container_name: "mysql_master"
+mysql_slave_container_name: "mysql_slave"
