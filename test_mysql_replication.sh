@@ -11,5 +11,5 @@ for i in {1..10}; do
 done
 
 echo "Validating Slave..."
-docker exec -it mysql_master mysql -uroot -prootpwd -D pipl -e "select count(*) from dummy;"
+docker exec -it mysql_slave mysql -uroot -prootpwd -D pipl -e "select count(*) from dummy;"
 
