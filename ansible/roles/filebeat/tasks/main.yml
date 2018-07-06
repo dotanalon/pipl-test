@@ -2,7 +2,7 @@
 - name: Create config file for filebeat
   template:
     src: filebeat.yml.j2
-    owner: 1000
+    owner: root
     mode: "0644"
     dest: "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml"
 
@@ -18,9 +18,4 @@
     volumes:
       - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
       - "{{ user_home_folder.stdout }}/data/nginx/logs/:/var/log/nginx/logs/:ro"
-#      - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
-
-- debug:
-   var: docker_network.Name
-#- name: workaroud to ansible bugs with docker_networks
-#  shell: "docker network connect {{ docker_network }} {{ filebeat_container_name }}"
+      - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"

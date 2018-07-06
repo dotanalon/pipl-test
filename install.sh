@@ -75,3 +75,4 @@ function add_ansible_user()
 install_docker
 install_ansible
 add_ansible_user "develop"
+sysctl -w vm.max_map_count=262144
