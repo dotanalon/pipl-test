@@ -1,4 +1,5 @@
 - hosts: all
+  become: True
 
   roles:
    - prepare
@@ -8,3 +9,4 @@
    - kibana
    - nginx
    - cerebro
+   - mysql-replication
