@@ -7,4 +7,4 @@
     networks:
       - name: "{{ docker_network.Name }}"
     volumes:
-      - "{{ user_home_folder.stdout }}/data/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "{{ user_home_folder.stdout }}/data/{{ elasticsearch_container_name }}:/usr/share/elasticsearch/data"

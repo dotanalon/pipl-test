@@ -8,16 +8,16 @@
 
 - name: Create a data folder for all containers
   file:
-    path: "{{ ansible_env.HOME }}/data/{{ item }}"
+    path: "{{ user_home_folder.stdout }}/data/{{ item }}"
     state: directory
     recurse: yes
   with_items:
-    - filebeat
-    - logstash
-    - elasticsearch
-    - kibana
-    - "nginx/conf.d/"
-    - "nginx/ssl/"
+    - "{{ filebeat_container_name }}"
+    - "{{ logstash_container_name }}"
+    - "{{ elasticsearch_container_name }}"
+    - "{{ kibana_container_name }}"
+    - "{{ nginx_container_name }}/conf.d/"
+    - "{{ nginx_container_name }}/ssl/"
 
 - name: Create Docker Network
   docker_network:
