@@ -1,3 +1,10 @@
+- name: Fix data folder permission
+  file:
+    path: "{{ user_home_folder.stdout }}/data/{{ elasticsearch_container_name }}"
+    owner: 1000
+    state: directory
+    recurse: yes
+
 - name: Create a elasticsearch container
   docker_container:
     name: "{{ elasticsearch_container_name }}"

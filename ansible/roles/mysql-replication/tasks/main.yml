@@ -8,6 +8,8 @@
       { "MYSQL_ROOT_PASSWORD": "rootpwd", "MYSQL_USER": "pipl", "MYSQL_PASSWORD": "pipl", "MYSQL_DATABASE": "pipl", "REPLICATION_USER": "replication_user", "REPLICATION_PASSWORD": "myreplpassword" }
     networks:
       - name: "{{ docker_network.Name }}"
+    volumes:
+      - "{{ user_home_folder.stdout }}/data/{{ mysql_master_container_name }}/mysql:/var/lib/mysql"
 
 
 - name: Create a slave mysql node
@@ -20,12 +22,7 @@
       - "{{ mysql_master_container_name }}:master"
     env:
       { "MYSQL_ROOT_PASSWORD": "rootpwd", "MYSQL_USER": "pipl", "MYSQL_PASSWORD": "pipl", "MYSQL_DATABASE": "pipl", "REPLICATION_USER": "replication_user", "REPLICATION_PASSWORD": "myreplpassword" }
-#    env:
-#      - MYSQL_ROOT_PASSWORD=rootpwd
-#      - MYSQL_USER=pipl
-#      - MYSQL_PASSWORD=pipl
-#      - MYSQL_DATABASE=pipl
-#      - REPLICATION_USER=replication_user
-#      - REPLICATION_PASSWORD=myreplpassword
     networks:
       - name: "{{ docker_network.Name }}"
+    volumes:
+      - "{{ user_home_folder.stdout }}/data/{{ mysql_slave_container_name }}/mysql:/var/lib/mysql"

@@ -1,8 +1,3 @@
-- name: Create config file for logstash
-  template:
-    src: pipeline.yml.j2
-    dest: "{{ user_home_folder.stdout }}/data/logstash/pipeline.yml"
-
 - name: simple pipelines
   template:
     src: simple.j2

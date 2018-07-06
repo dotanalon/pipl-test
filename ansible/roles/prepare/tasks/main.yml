@@ -18,6 +18,8 @@
     - "{{ kibana_container_name }}"
     - "{{ nginx_container_name }}/conf.d/"
     - "{{ nginx_container_name }}/ssl/"
+    - "{{ mysql_master_container_name }}/mysql"
+    - "{{ mysql_slave_container_name }}/mysql"
 
 - name: Create Docker Network
   docker_network:
