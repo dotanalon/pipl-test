@@ -4,6 +4,7 @@ filebeat.prospectors:
     - /var/log/nginx/logs/*access.log*
     - /var/log/nginx/logs/*error.log*
     - /var/lib/docker/containers/*/*.log
+    - /var/log/docker-host/*/*.log
   exclude_files: [".gz$"]
   json.message_key: log
   json.keys_under_root: true
